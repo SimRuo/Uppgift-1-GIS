@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Leaflet + Bootstrap Map</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/leaflet.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/plugins/L.Control.Zoomslider.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.Default.css') }}" />
+
+    <script src="{{ url_for('static', filename='src/leaflet-src.js') }}"></script>
+    <script src="{{ url_for('static', filename='src/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='src/turf.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='src/plugins/L.Control.Zoomslider.js') }}"></script>
+    <script src="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.js') }}"></script>
+
+    <style>
+      #map {
+        height: 600px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4">Map Assignment</h1>
+      <div id="map"></div>
+    </div>
+
+    <script>
+      const map = L.map("map").setView([59.3293, 18.0686], 12); // Centered on Stockholm, Sweden
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap",
+      }).addTo(map);
+    </script>
+  </body>
+</html>
