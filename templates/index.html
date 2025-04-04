@@ -18,7 +18,7 @@
 
     <style>
       #map {
-        height: 600px;
+        height: 90vh;
       }
     </style>
   </head>
@@ -26,15 +26,11 @@
     <div class="container mt-4">
       <h1 class="mb-4">Map Assignment</h1>
       <div id="map"></div>
+      <button id="task1Button" class="btn btn-primary">Task 1</button>
+      <button id="task2Button" class="btn btn-secondary">Task 2</button>
     </div>
 
-    <script>
-      const map = L.map("map").setView([59.3293, 18.0686], 12); // Centered on Stockholm, Sweden
-
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: "© OpenStreetMap",
-      }).addTo(map);
-    </script>
+    <!-- Link to the external JavaScript file -->
+    <script src="{{ url_for('static', filename='src/map.js') }}"></script>
   </body>
 </html>
