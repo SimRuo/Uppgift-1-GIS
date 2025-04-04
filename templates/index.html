@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.Default.css') }}" />
+    <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
 
     <script src="{{ url_for('static', filename='src/leaflet-src.js') }}"></script>
     <script src="{{ url_for('static', filename='src/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ url_for('static', filename='src/turf.min.js') }}"></script>
     <script src="{{ url_for('static', filename='src/plugins/L.Control.Zoomslider.js') }}"></script>
     <script src="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.js') }}"></script>
+    <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
 
     <style>
       #map {
@@ -39,11 +41,11 @@
         </div>
 
         <!-- kartan -->
-        <div class="col-md-9 p-0">
+        <div class="col p-0">
           <div id="map" class="w-100"></div>
         </div>
 
-        <!-- Sidebar -->
+        <!-- Sidebar, vi kan lägga till så att den inte syns om det inte finns innehåll i den sen -->
         <div class="col-2 bg-light p-3 d-flex flex-column">
           <h3 class="mb-4">Sidebar</h3>
           <div id="informationSidebar"></div>
@@ -51,7 +53,10 @@
       </div>
     </div>
 
-    <!-- Link to the external JavaScript file -->
+    <!-- Skickar vidare JSON filen som vi laddade in i app.py -->
+    <script type="application/json" id="supermarket-data">
+      {{ geojson_data|tojson|safe }}
+    </script>
     <script src="{{ url_for('static', filename='src/map.js') }}"></script>
   </body>
 </html>

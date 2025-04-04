@@ -1,5 +1,8 @@
-const map = L.map("map").setView([60.486005, 15.430619], 17);
+const supermarketData = JSON.parse(
+    document.getElementById('supermarket-data').textContent
+);
 
+const map = L.map("map").setView([60.486005, 15.430619], 17);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: "© OpenStreetMap",
@@ -75,7 +78,10 @@ const skolor = [
     },
 ];
 
+const line1coords = [];
+
 skolor.forEach((skola) => {
+    line1coords.push({ lat: skola.kordinater[0], lng: skola.kordinater[1] });
     L.marker(skola.kordinater)
         .addTo(task2Layer)
         .on('click', function (e) {
@@ -84,29 +90,77 @@ skolor.forEach((skola) => {
         });
 });
 
+let polylineMeasure = L.control.polylineMeasure({
+    position: 'topleft',
+    unit: 'kilometres',
+    showBearings: false,
+    clearMeasurementsOnStop: false,
+    showClearControl: false,
+    showUnitControl: false,
+    measureControlClasses: ["d-none"], // Vi använder css för att gömma knappen för att mäta avståndet.
+})
+polylineMeasure.addTo(map);
+
+// HÄR STARTAR TASK 3
+let task3Layer = L.layerGroup();
+
+// lägga till lite if null checks här för att inte rendera en massa undefined
+supermarketData.features.forEach(feature => {
+    const coords = feature.geometry.coordinates;
+    const [lng, lat] = coords;
+    L.marker([lat, lng]).addTo(task3Layer).bindPopup(
+        `<h4>${feature.properties.name}</h4><p>${feature.properties.description}</p><p>Öppettider: ${feature.properties.opening_ho}</p>`
+    );
+
+    // vet inte om det är såhär vi ska göra eller om vi ska använda typ turf.buffer som vijay visade i föreläsningen.
+    L.circle([lat, lng], {
+        radius: 1000,
+        color: 'blue',
+        weight: 1,
+        opacity: 0.5,
+        fillOpacity: 0.2
+    }).addTo(task3Layer);
+});
+
+// HÄR STARTAR TASK 4
+let task4Layer = L.layerGroup();
+
+
+
+
+
+
+
+
+
+
 let activeLayer = task1Layer;
 
-document.getElementById("task1Button").addEventListener("click", () => {
+// mycket repeterande kod så skapar en liten funktion för att rensa kartan och rendera det lagret vi vill ha.
+function clearMap(newLayer) {
     document.getElementById("informationSidebar").innerHTML = '';
     map.removeLayer(activeLayer);
-    task1Layer.addTo(map);
+    activeLayer = newLayer;
+    activeLayer.addTo(map);
+}
+
+// Event för knapparna, vi rensar bara allt som ska rensas och renderar lagret som vi behöver.
+// Sparar activeLayer i en variabel så att vi kan ta bort det lagret som är aktivt just nu.
+document.getElementById("task1Button").addEventListener("click", () => {
+    clearMap(task1Layer)
     map.setView([60.486005, 15.430619], 17);
-    activeLayer = task1Layer;
 });
 
 document.getElementById("task2Button").addEventListener("click", () => {
-    document.getElementById("informationSidebar").innerHTML = '';
-    map.removeLayer(activeLayer);
-    task2Layer.addTo(map);
+    clearMap(task2Layer)
     map.setView([60.605866810126194, 15.628008842468262], 14);
-    activeLayer = task2Layer;
+    polylineMeasure.seed([line1coords]) //avstånd mellan skolorna
+
 });
 
 document.getElementById("task3Button").addEventListener("click", () => {
-    document.getElementById("informationSidebar").innerHTML = '';
-    map.removeLayer(activeLayer);
-    task3Layer.addTo(map);
-    activeLayer = task3Layer;
+    clearMap(task3Layer)
+    map.setView([60.0586, 17.6389], 9);
 });
 
 document.getElementById("task4Button").addEventListener("click", () => {
