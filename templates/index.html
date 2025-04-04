@@ -22,12 +22,33 @@
       }
     </style>
   </head>
-  <body>
-    <div class="container mt-4">
-      <h1 class="mb-4">Map Assignment</h1>
-      <div id="map"></div>
-      <button id="task1Button" class="btn btn-primary">Task 1</button>
-      <button id="task2Button" class="btn btn-secondary">Task 2</button>
+  <body class="bg-light">
+    <div class="container-fluid">
+      <h1 class="my-4 d-flex justify-content-center">Map Assignment</h1>
+      <div class="row">
+        <!-- Alla taskknappar -->
+        <div class="col-1 bg-light p-3 d-flex flex-column">
+          <h3 class="mb-4">Tasks</h3>
+          <button id="task1Button" class="btn btn-primary mb-2">Task 1</button>
+          <button id="task2Button" class="btn btn-primary mb-2">Task 2</button>
+          <button id="task3Button" class="btn btn-primary mb-2">Task 3</button>
+          <button id="task4Button" class="btn btn-primary mb-2">Task 4</button>
+          <button id="task5Button" class="btn btn-primary mb-2">Task 5</button>
+          <button id="task6Button" class="btn btn-primary mb-2">Task 6</button>
+          <button id="task7Button" class="btn btn-primary mb-2">Task 7</button>
+        </div>
+
+        <!-- kartan -->
+        <div class="col-md-9 p-0">
+          <div id="map" class="w-100"></div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-2 bg-light p-3 d-flex flex-column">
+          <h3 class="mb-4">Sidebar</h3>
+          <div id="informationSidebar"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Link to the external JavaScript file -->
