@@ -126,13 +126,13 @@ supermarketData.features.forEach(feature => {
 let task4Layer = L.layerGroup();
 
 
+const imageUrl = '/static/src/images/njupeskär.jpg';
+const imageBounds = [
+    [61.547848, 12.726224],
+    [61.597848, 12.852994]
+];
 
-
-
-
-
-
-
+L.imageOverlay(imageUrl, imageBounds).addTo(task4Layer);
 
 let activeLayer = task1Layer;
 
@@ -164,10 +164,8 @@ document.getElementById("task3Button").addEventListener("click", () => {
 });
 
 document.getElementById("task4Button").addEventListener("click", () => {
-    document.getElementById("informationSidebar").innerHTML = '';
-    map.removeLayer(activeLayer);
-    task4Layer.addTo(map);
-    activeLayer = task4Layer;
+    clearMap(task4Layer)
+    map.setView([61.547848, 12.776224], 12);
 });
 
 document.getElementById("task5Button").addEventListener("click", () => {
