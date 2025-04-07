@@ -1,12 +1,30 @@
+// Skickat med dessa från app.py -> index.html -> map.js
 const supermarketData = JSON.parse(
     document.getElementById('supermarket-data').textContent
 );
+const fuelData = JSON.parse(
+    document.getElementById('fuel-data').textContent
+);
 
-const map = L.map("map").setView([60.486005, 15.430619], 17);
+const map = L.map("map", {
+    zoomAnimation: true,
+    fadeAnimation: true,
+    markerZoomAnimation: true
+}).setView([60.486005, 15.430619], 17);
+
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: "© OpenStreetMap",
 }).addTo(map);
+
+// animation för hover effekt på kartan
+document.getElementById('map').addEventListener('mouseover', function () {
+    this.style.boxShadow = '0 8px 15px rgba(0,0,0,0.15)';
+});
+
+document.getElementById('map').addEventListener('mouseout', function () {
+    this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+});
 
 // HÄR STARTAR TASK 1
 let task1Layer = L.layerGroup();
@@ -86,7 +104,15 @@ skolor.forEach((skola) => {
         .addTo(task2Layer)
         .on('click', function (e) {
             document.getElementById("informationSidebar").innerHTML = '';
-            document.getElementById("informationSidebar").innerHTML = `<h4>${skola.namn}</h4><p>${skola.beskrivning}</p><p>Antal elever: ${skola.elever}</p>`;
+            document.getElementById("informationSidebar").innerHTML = `
+            <div class="card shadow rounded-4 p-3 mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-info">${skola.namn}</h5>
+                    <p class="card-text text-muted mb-2">${skola.beskrivning}</p>
+                    <p class="card-text mb-0"><strong>Antal elever:</strong> ${skola.elever}</p>
+                </div>
+            </div>
+            `;
         });
 });
 
@@ -134,6 +160,68 @@ const imageBounds = [
 
 L.imageOverlay(imageUrl, imageBounds).addTo(task4Layer);
 
+// HÄR STARTAR TASK 5
+// tänkte köra på SMHIs data men dom har cors restriktioner så får inte ut datan.
+let task5Layer = L.layerGroup();
+
+const cities = [
+    { name: "Stockholm", lat: 59.33, lon: 18.06 },
+    { name: "Gothenburg", lat: 57.71, lon: 11.98 },
+    { name: "Malmö", lat: 55.61, lon: 13.00 },
+    { name: "Uppsala", lat: 59.86, lon: 17.64 },
+    { name: "Luleå", lat: 65.58, lon: 22.15 }
+];
+
+const API_KEY = "";
+const container = document.getElementById('informationSidebar');
+
+cities.forEach(city => {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (!data.main || !data.weather || !data.wind) {
+                throw new Error("Fick inte med all data från API:et");
+            }
+
+            const temperature = data.main.temp;
+            const windSpeed = data.wind.speed;
+            const description = data.weather[0].description;
+            const icon = data.weather[0].icon;
+
+            L.marker([city.lat, city.lon]).addTo(task5Layer).on('click', function (e) {
+                document.getElementById("informationSidebar").innerHTML = '';
+                document.getElementById("informationSidebar").innerHTML = `
+                    <div class="card shadow rounded-3 text-center p-3 mb-4" style="width: 18rem;">
+                      <h5 class="card-title fw-bold text-primary">${city.name}</h5>
+                      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="card-img-top mx-auto" alt="${description}" style="width: 100px;">
+                      <div class="card-body">
+                        <p class="text-capitalize text-muted mb-1">${description}</p>
+                        <p class="mb-1"><strong>Temperature:</strong> ${temperature} °C</p>
+                        <p class="mb-0"><strong>Wind Speed:</strong> ${windSpeed} m/s</p>
+                      </div>
+                    </div>
+                `;
+            });
+        })
+        .catch(error => {
+            console.error("Error", city.name, error);
+        });
+});
+
+// HÄR STARTAR TASK 6
+let task6Layer = L.layerGroup();
+
+fuelData.features.forEach(feature => {
+    const coords = feature.geometry.coordinates;
+    const [lng, lat] = coords;
+    L.marker([lat, lng]).addTo(task6Layer).bindPopup(
+        `<h4>${feature.properties.name}</h4>`
+    );
+});
+
+
 let activeLayer = task1Layer;
 
 // mycket repeterande kod så skapar en liten funktion för att rensa kartan och rendera det lagret vi vill ha.
@@ -148,36 +236,44 @@ function clearMap(newLayer) {
 // Sparar activeLayer i en variabel så att vi kan ta bort det lagret som är aktivt just nu.
 document.getElementById("task1Button").addEventListener("click", () => {
     clearMap(task1Layer)
-    map.setView([60.486005, 15.430619], 17);
+    map.flyTo([60.486005, 15.430619], 17, {
+        duration: 1
+    });
 });
 
 document.getElementById("task2Button").addEventListener("click", () => {
     clearMap(task2Layer)
-    map.setView([60.605866810126194, 15.628008842468262], 14);
+    map.flyTo([60.605866810126194, 15.628008842468262], 14, {
+        duration: 1
+    });
     polylineMeasure.seed([line1coords]) //avstånd mellan skolorna
 
 });
 
 document.getElementById("task3Button").addEventListener("click", () => {
     clearMap(task3Layer)
-    map.setView([60.0586, 17.6389], 9);
+    map.flyTo([60.0586, 17.6389], 9), {
+        duration: 0.1
+    };
 });
 
 document.getElementById("task4Button").addEventListener("click", () => {
     clearMap(task4Layer)
-    map.setView([61.547848, 12.776224], 12);
+    map.flyTo([61.547848, 12.776224], 12), {
+        duration: 0.1
+    };
 });
 
 document.getElementById("task5Button").addEventListener("click", () => {
-    document.getElementById("informationSidebar").innerHTML = '';
-    map.removeLayer(activeLayer);
-    task5Layer.addTo(map);
-    activeLayer = task5Layer;
+    clearMap(task5Layer)
+    map.flyTo([62, 15], 6), {
+        duration: 0.02
+    };
 });
 
 document.getElementById("task6Button").addEventListener("click", () => {
-    document.getElementById("informationSidebar").innerHTML = '';
-    map.removeLayer(activeLayer);
-    task6Layer.addTo(map);
-    activeLayer = task6Layer;
+    clearMap(task6Layer)
+    map.flyTo([59.334591, 18.023240], 11), {
+        duration: 0.02
+    };
 });

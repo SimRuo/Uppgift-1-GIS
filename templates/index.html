@@ -5,6 +5,7 @@
     <title>Leaflet + Bootstrap Map</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='src/leaflet.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='src/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='src/css/styles.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='src/plugins/L.Control.Zoomslider.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.css') }}" />
@@ -37,7 +38,6 @@
           <button id="task4Button" class="btn btn-primary mb-2">Task 4</button>
           <button id="task5Button" class="btn btn-primary mb-2">Task 5</button>
           <button id="task6Button" class="btn btn-primary mb-2">Task 6</button>
-          <button id="task7Button" class="btn btn-primary mb-2">Task 7</button>
         </div>
 
         <!-- kartan -->
@@ -53,9 +53,12 @@
       </div>
     </div>
 
-    <!-- Skickar vidare JSON filen som vi laddade in i app.py -->
+    <!-- Skickar vidare JSON filerna som vi laddade in i app.py -->
     <script type="application/json" id="supermarket-data">
-      {{ geojson_data|tojson|safe }}
+      {{ supermarket_data|tojson|safe }}
+    </script>
+    <script type="application/json" id="fuel-data">
+      {{ fuel_data|tojson|safe }}
     </script>
     <script src="{{ url_for('static', filename='src/map.js') }}"></script>
   </body>

@@ -8,8 +8,10 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     with open('static/src/supermarket.geojson', 'r', encoding='utf-8') as f:
-        geojson_data = json.load(f)
-    return render_template("index.html", geojson_data=geojson_data)
+        supermarket_data = json.load(f)
+    with open('static/src/fuel.geojson', 'r', encoding='utf-8') as f:
+        fuel_data = json.load(f)
+    return render_template("index.html", supermarket_data=supermarket_data, fuel_data=fuel_data)
 
 if __name__ == "__main__":
     app.run(debug=True)
