@@ -11,7 +11,9 @@ def home():
         supermarket_data = json.load(f)
     with open('static/src/fuel.geojson', 'r', encoding='utf-8') as f:
         fuel_data = json.load(f)
-    return render_template("index.html", supermarket_data=supermarket_data, fuel_data=fuel_data)
+    with open('static/src/school_data_with_clusters.geojson', 'r', encoding='utf-8') as f:
+        school_data = json.load(f)
+    return render_template("index.html", supermarket_data=supermarket_data, fuel_data=fuel_data, school_data=school_data)
 
 if __name__ == "__main__":
     app.run(debug=True)

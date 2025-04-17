@@ -5,6 +5,9 @@ const supermarketData = JSON.parse(
 const fuelData = JSON.parse(
     document.getElementById('fuel-data').textContent
 );
+const schoolData = JSON.parse(
+    document.getElementById('school-data').textContent
+);
 
 const map = L.map("map", {
     zoomAnimation: true,
@@ -172,7 +175,7 @@ const cities = [
     { name: "Luleå", lat: 65.58, lon: 22.15 }
 ];
 
-const API_KEY = "";
+const API_KEY = "nädu";
 const container = document.getElementById('informationSidebar');
 
 cities.forEach(city => {
@@ -221,6 +224,25 @@ fuelData.features.forEach(feature => {
     );
 });
 
+// HÄR STARTAR TASK 7
+let task7Layer = L.layerGroup();
+
+schoolData.features.forEach(feature => {
+    const coords = feature.geometry.coordinates;
+    const [lng, lat] = coords;
+
+    const color = feature.properties.Color;
+
+    const markerIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: `<div style="background-color:${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10],
+    });
+
+    L.marker([lat, lng], { icon: markerIcon }).addTo(task7Layer);
+});
+
 
 let activeLayer = task1Layer;
 
@@ -252,28 +274,35 @@ document.getElementById("task2Button").addEventListener("click", () => {
 
 document.getElementById("task3Button").addEventListener("click", () => {
     clearMap(task3Layer)
-    map.flyTo([60.0586, 17.6389], 9), {
-        duration: 0.1
-    };
+    map.flyTo([60.0586, 17.6389], 9, {
+        duration: 1
+    });
 });
 
 document.getElementById("task4Button").addEventListener("click", () => {
     clearMap(task4Layer)
-    map.flyTo([61.547848, 12.776224], 12), {
-        duration: 0.1
-    };
+    map.flyTo([61.547848, 12.776224], 12, {
+        duration: 1
+    });
 });
 
 document.getElementById("task5Button").addEventListener("click", () => {
     clearMap(task5Layer)
-    map.flyTo([62, 15], 6), {
-        duration: 0.02
-    };
+    map.flyTo([62, 15], 6, {
+        duration: 1
+    });
 });
 
 document.getElementById("task6Button").addEventListener("click", () => {
     clearMap(task6Layer)
-    map.flyTo([59.334591, 18.023240], 11), {
-        duration: 0.02
-    };
+    map.flyTo([59.334591, 18.023240], 11, {
+        duration: 1
+    });
+});
+
+document.getElementById("task7Button").addEventListener("click", () => {
+    clearMap(task7Layer)
+    map.flyTo([59.334591, 18.023240], 11, {
+        duration: 1
+    });
 });

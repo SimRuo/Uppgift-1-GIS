@@ -1,0 +1,579 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.074645,
+          59.406929
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.809932,
+          59.247189
+        ]
+      },
+      "properties": {
+        "Cluster": 2,
+        "Color": "#000000"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.07766,
+          59.30711
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.069763,
+          59.342075
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.056867,
+          59.345664
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.077445,
+          59.309903
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.064195,
+          59.336587
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.083163,
+          59.316232
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.07252,
+          59.318701
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.986507,
+          59.32093
+        ]
+      },
+      "properties": {
+        "Cluster": 1,
+        "Color": "#F58231"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.063412,
+          59.338606
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.062167,
+          59.351637
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.079312,
+          59.342206
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.064581,
+          59.370191
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.079298,
+          59.314279
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.101799,
+          59.336899
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.006678,
+          59.416505
+        ]
+      },
+      "properties": {
+        "Cluster": 3,
+        "Color": "#FFE119"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.999146,
+          59.355777
+        ]
+      },
+      "properties": {
+        "Cluster": 3,
+        "Color": "#FFE119"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.258204,
+          59.294824
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.055483,
+          59.350669
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.093772,
+          59.33438
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.044617,
+          59.344025
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.091435,
+          59.393909
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.958462,
+          59.304169
+        ]
+      },
+      "properties": {
+        "Cluster": 1,
+        "Color": "#F58231"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.103379,
+          59.345902
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.015325,
+          59.338048
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.94835,
+          59.406017
+        ]
+      },
+      "properties": {
+        "Cluster": 3,
+        "Color": "#FFE119"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.086414,
+          59.342819
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.97521,
+          59.280725
+        ]
+      },
+      "properties": {
+        "Cluster": 1,
+        "Color": "#F58231"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.062929,
+          59.350729
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.100566,
+          59.337616
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.003416,
+          59.360321
+        ]
+      },
+      "properties": {
+        "Cluster": 3,
+        "Color": "#FFE119"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.015389,
+          59.330015
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.047702,
+          59.34802
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.049464,
+          59.309695
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.026923,
+          59.31194
+        ]
+      },
+      "properties": {
+        "Cluster": 4,
+        "Color": "#911EB4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.096499,
+          59.305368
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.106456,
+          59.305374
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          18.145123,
+          59.376086
+        ]
+      },
+      "properties": {
+        "Cluster": 0,
+        "Color": "#E6194B"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.993631,
+          59.436129
+        ]
+      },
+      "properties": {
+        "Cluster": 3,
+        "Color": "#FFE119"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.990767,
+          59.299557
+        ]
+      },
+      "properties": {
+        "Cluster": 1,
+        "Color": "#F58231"
+      }
+    }
+  ]
+}
