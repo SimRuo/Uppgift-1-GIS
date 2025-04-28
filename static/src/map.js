@@ -175,11 +175,12 @@ const cities = [
     { name: "Luleå", lat: 65.58, lon: 22.15 }
 ];
 
-const API_KEY = "nädu";
+const API_KEY = "secret"; // ersätt med din API-nyckel
 const container = document.getElementById('informationSidebar');
 
 cities.forEach(city => {
     const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`;
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${city.lat}&lon=${city.lon}&units=metric&appid=${API_KEY}`;
 
     fetch(url)
         .then(response => response.json())
@@ -193,25 +194,63 @@ cities.forEach(city => {
             const description = data.weather[0].description;
             const icon = data.weather[0].icon;
 
-            L.marker([city.lat, city.lon]).addTo(task5Layer).on('click', function (e) {
-                document.getElementById("informationSidebar").innerHTML = '';
-                document.getElementById("informationSidebar").innerHTML = `
-                    <div class="card shadow rounded-3 text-center p-3 mb-4" style="width: 18rem;">
-                      <h5 class="card-title fw-bold text-primary">${city.name}</h5>
-                      <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="card-img-top mx-auto" alt="${description}" style="width: 100px;">
-                      <div class="card-body">
+            const marker = L.marker([city.lat, city.lon]).addTo(task5Layer).bindPopup(`
+                    <h5 class="card-title fw-bold text-primary">${city.name}</h5>
+                    <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="card-img-top mx-auto" alt="${description}" style="width: 100px;">
+                    <div class="card-body">
                         <p class="text-capitalize text-muted mb-1">${description}</p>
                         <p class="mb-1"><strong>Temperature:</strong> ${temperature} °C</p>
                         <p class="mb-0"><strong>Wind Speed:</strong> ${windSpeed} m/s</p>
-                      </div>
                     </div>
-                `;
+            `);
+
+            marker.on('click', function () {
+                fetch(forecastUrl)
+                    .then(response => response.json())
+                    .then(forecastData => {
+                        if (!forecastData.list) {
+                            throw new Error("Fick inte med all data från API:et");
+                        }
+
+                        let forecastHtml = `
+                            <div class="card shadow rounded-3 text-center p-3 mb-4" style="width: 18rem;">
+                                <h5 class="card-title fw-bold text-primary">${city.name} Forecast</h5>
+                        `;
+
+                        forecastData.list.forEach(forecast => {
+                            const forecastTime = new Date(forecast.dt * 1000).toLocaleString();
+                            const forecastTemp = forecast.main.temp;
+                            const forecastDescription = forecast.weather[0].description;
+                            const forecastIcon = forecast.weather[0].icon;
+                            const forecastWindSpeed = forecast.wind.speed;
+
+                            forecastHtml += `
+                                <div class="card-body">
+                                    <p class="mb-1"><strong>Date:</strong> ${forecastTime}</p>
+                                    <img src="https://openweathermap.org/img/wn/${forecastIcon}@2x.png" class="card-img-top mx-auto" alt="${forecastDescription}" style="width: 100px;">
+                                    <p class="text-capitalize text-muted mb-1">${forecastDescription}</p>
+                                    <p class="mb-1"><strong>Temperature:</strong> ${forecastTemp} °C</p>
+                                    <p class="mb-0"><strong>Wind Speed:</strong> ${forecastWindSpeed} m/s</p>
+                                    <hr>
+                                </div>
+                            `;
+                        });
+
+                        forecastHtml += `</div>`;
+
+                        document.getElementById("informationSidebar").innerHTML = forecastHtml;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching forecast data", error);
+                    });
             });
         })
         .catch(error => {
-            console.error("Error", city.name, error);
+            console.error("Error fetching current weather data", city.name, error);
         });
 });
+
+
 
 // HÄR STARTAR TASK 6
 let task6Layer = L.layerGroup();
