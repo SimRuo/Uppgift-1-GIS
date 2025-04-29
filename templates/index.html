@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static', filename='dist/MarkerCluster.Default.css') }}" />
     <link rel="stylesheet" href="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
 
     <script src="{{ url_for('static', filename='src/leaflet-src.js') }}"></script>
     <script src="{{ url_for('static', filename='src/jquery-3.6.0.min.js') }}"></script>
@@ -18,6 +20,7 @@
     <script src="{{ url_for('static', filename='src/plugins/L.Control.Zoomslider.js') }}"></script>
     <script src="{{ url_for('static', filename='src/plugins/L.Control.Sidebar.js') }}"></script>
     <script src="https://ppete2.github.io/Leaflet.PolylineMeasure/Leaflet.PolylineMeasure.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
 
     <style>
       #map {
@@ -30,8 +33,7 @@
       <h1 class="my-4 d-flex justify-content-center">Map Assignment</h1>
       <div class="row">
         <!-- Alla taskknappar -->
-        <div class="col-1 bg-light p-3 d-flex flex-column">
-          <h3 class="mb-4">Tasks</h3>
+        <div class="col-1 bg-light d-flex flex-column">
           <button id="task1Button" class="btn btn-primary mb-2">Task 1</button>
           <button id="task2Button" class="btn btn-primary mb-2">Task 2</button>
           <button id="task3Button" class="btn btn-primary mb-2">Task 3</button>
@@ -47,8 +49,7 @@
         </div>
 
         <!-- Sidebar, vi kan lägga till så att den inte syns om det inte finns innehåll i den sen -->
-        <div class="col-2 bg-light p-3 d-flex flex-column">
-          <h3 class="mb-4">Sidebar</h3>
+        <div class="col-2 mb-2 bg-light d-flex flex-column overflow-auto" style="height: 90vh">
           <div id="informationSidebar"></div>
         </div>
       </div>

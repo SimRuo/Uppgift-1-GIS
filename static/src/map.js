@@ -9,6 +9,28 @@ const schoolData = JSON.parse(
     document.getElementById('school-data').textContent
 );
 
+// Skapar en klass för att skapa en ny ikon för Leaflet
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: '/static/src/images/marker-shadow.png',
+        iconSize: [50, 50],
+        shadowSize: [50, 64],
+        iconAnchor: [25, 50],
+        shadowAnchor: [15, 63],
+        popupAnchor: [-3, -76]
+    }
+});
+
+var markers = {
+    '#000000': new LeafIcon({ iconUrl: '/static/src/images/marker-black.png' }),
+    '#0000FF': new LeafIcon({ iconUrl: '/static/src/images/marker-blue.png' }),
+    '#F58231': new LeafIcon({ iconUrl: '/static/src/images/marker-orange.png' }),
+    '#911EB4': new LeafIcon({ iconUrl: '/static/src/images/marker-purple.png' }),
+    '#E6194B': new LeafIcon({ iconUrl: '/static/src/images/marker-red.png' }),
+    '#FFE119': new LeafIcon({ iconUrl: '/static/src/images/marker-yellow.png' })
+};
+
+
 const map = L.map("map", {
     zoomAnimation: true,
     fadeAnimation: true,
@@ -59,7 +81,7 @@ var centerPoint = L.point(map.getSize().x / 2, map.getSize().y / 2);
 // gör om pixlarna till latlng
 var latlng = map.containerPointToLatLng(centerPoint);
 
-L.marker(latlng).addTo(task1Layer).bindPopup(
+L.marker(latlng, { icon: markers['#0000FF'] }).addTo(task1Layer).bindPopup(
     "<h4>Svensk Fastighetsförmedling</h4><img src='/static/src/images/SF.jpg' width='200px'><p>Här är Svensk Fastighetsförmedling!</p>"
 );
 
@@ -103,7 +125,7 @@ const line1coords = [];
 
 skolor.forEach((skola) => {
     line1coords.push({ lat: skola.kordinater[0], lng: skola.kordinater[1] });
-    L.marker(skola.kordinater)
+    L.marker(skola.kordinater, { icon: markers['#0000FF'] })
         .addTo(task2Layer)
         .on('click', function (e) {
             document.getElementById("informationSidebar").innerHTML = '';
@@ -134,22 +156,46 @@ polylineMeasure.addTo(map);
 let task3Layer = L.layerGroup();
 
 // lägga till lite if null checks här för att inte rendera en massa undefined
-supermarketData.features.forEach(feature => {
-    const coords = feature.geometry.coordinates;
-    const [lng, lat] = coords;
-    L.marker([lat, lng]).addTo(task3Layer).bindPopup(
-        `<h4>${feature.properties.name}</h4><p>${feature.properties.description}</p><p>Öppettider: ${feature.properties.opening_ho}</p>`
-    );
+function setBuffer() {
+    const buffers = [];
 
-    // vet inte om det är såhär vi ska göra eller om vi ska använda typ turf.buffer som vijay visade i föreläsningen.
-    L.circle([lat, lng], {
-        radius: 1000,
-        color: 'blue',
-        weight: 1,
-        opacity: 0.5,
-        fillOpacity: 0.2
-    }).addTo(task3Layer);
-});
+    supermarketData.features.forEach(feature => {
+        const point = turf.point(feature.geometry.coordinates);
+        const buffered = turf.buffer(point, 1, { units: 'kilometers' });
+        buffers.push({ feature, buffered });
+    });
+
+    buffers.forEach((item, index) => {
+        const feature = item.feature;
+        const buffered = item.buffered;
+        const coords = feature.geometry.coordinates;
+        const [lng, lat] = coords;
+
+        let overlaps = false;
+
+        for (let i = 0; i < buffers.length; i++) {
+            if (i !== index) {
+                if (turf.booleanIntersects(buffered, buffers[i].buffered)) {
+                    overlaps = true;
+                    break;
+                }
+            }
+        }
+
+        const markerColor = overlaps ? '#911EB4' : '#0000FF';
+
+        L.marker([lat, lng], { icon: markers[markerColor] }).addTo(task3Layer).bindPopup(
+            `<h4>${feature.properties.name}</h4><p>${feature.properties.description}</p><p>Öppettider: ${feature.properties.opening_ho}</p>`
+        );
+
+        L.geoJSON(buffered, {
+            color: 'blue',
+            weight: 1,
+            opacity: 0.5,
+            fillOpacity: 0.2
+        }).addTo(task3Layer);
+    });
+}
 
 // HÄR STARTAR TASK 4
 let task4Layer = L.layerGroup();
@@ -164,8 +210,20 @@ const imageBounds = [
 L.imageOverlay(imageUrl, imageBounds).addTo(task4Layer);
 
 // HÄR STARTAR TASK 5
+
+let task5Layer = L.markerClusterGroup();
+
+fuelData.features.forEach(feature => {
+    const coords = feature.geometry.coordinates;
+    const [lng, lat] = coords;
+    L.marker([lat, lng], { icon: markers['#0000FF'] }).addTo(task5Layer).bindPopup(
+        `<h4>${feature.properties.name}</h4>`
+    );
+});
+
+// HÄR STARTAR TASK 6
 // tänkte köra på SMHIs data men dom har cors restriktioner så får inte ut datan.
-let task5Layer = L.layerGroup();
+let task6Layer = L.layerGroup();
 
 const cities = [
     { name: "Stockholm", lat: 59.33, lon: 18.06 },
@@ -175,7 +233,7 @@ const cities = [
     { name: "Luleå", lat: 65.58, lon: 22.15 }
 ];
 
-const API_KEY = "secret"; // ersätt med din API-nyckel
+const API_KEY = "hemligt";
 const container = document.getElementById('informationSidebar');
 
 cities.forEach(city => {
@@ -194,7 +252,7 @@ cities.forEach(city => {
             const description = data.weather[0].description;
             const icon = data.weather[0].icon;
 
-            const marker = L.marker([city.lat, city.lon]).addTo(task5Layer).bindPopup(`
+            const marker = L.marker([city.lat, city.lon], { icon: markers['#0000FF'] }).addTo(task6Layer).bindPopup(`
                     <h5 class="card-title fw-bold text-primary">${city.name}</h5>
                     <img src="https://openweathermap.org/img/wn/${icon}@2x.png" class="card-img-top mx-auto" alt="${description}" style="width: 100px;">
                     <div class="card-body">
@@ -213,9 +271,10 @@ cities.forEach(city => {
                         }
 
                         let forecastHtml = `
-                            <div class="card shadow rounded-3 text-center p-3 mb-4" style="width: 18rem;">
-                                <h5 class="card-title fw-bold text-primary">${city.name} Forecast</h5>
-                        `;
+                        <div class="card shadow rounded-3 text-center p-3">
+                            <h5 class="card-title fw-bold text-primary">${city.name} Forecast</h5>
+                            <div class="forecast-container">
+                    `;
 
                         forecastData.list.forEach(forecast => {
                             const forecastTime = new Date(forecast.dt * 1000).toLocaleString();
@@ -225,18 +284,18 @@ cities.forEach(city => {
                             const forecastWindSpeed = forecast.wind.speed;
 
                             forecastHtml += `
-                                <div class="card-body">
-                                    <p class="mb-1"><strong>Date:</strong> ${forecastTime}</p>
-                                    <img src="https://openweathermap.org/img/wn/${forecastIcon}@2x.png" class="card-img-top mx-auto" alt="${forecastDescription}" style="width: 100px;">
-                                    <p class="text-capitalize text-muted mb-1">${forecastDescription}</p>
-                                    <p class="mb-1"><strong>Temperature:</strong> ${forecastTemp} °C</p>
-                                    <p class="mb-0"><strong>Wind Speed:</strong> ${forecastWindSpeed} m/s</p>
-                                    <hr>
-                                </div>
-                            `;
+                            <div class="card-body">
+                                <p class="mb-1"><strong>Date:</strong> ${forecastTime}</p>
+                                <img src="https://openweathermap.org/img/wn/${forecastIcon}@2x.png" class="card-img-top mx-auto" alt="${forecastDescription}" style="width: 100px;">
+                                <p class="text-capitalize text-muted mb-1">${forecastDescription}</p>
+                                <p class="mb-1"><strong>Temperature:</strong> ${forecastTemp} °C</p>
+                                <p class="mb-0"><strong>Wind Speed:</strong> ${forecastWindSpeed} m/s</p>
+                                <hr>
+                            </div>
+                        `;
                         });
 
-                        forecastHtml += `</div>`;
+                        forecastHtml += `</div></div>`;
 
                         document.getElementById("informationSidebar").innerHTML = forecastHtml;
                     })
@@ -252,34 +311,15 @@ cities.forEach(city => {
 
 
 
-// HÄR STARTAR TASK 6
-let task6Layer = L.layerGroup();
-
-fuelData.features.forEach(feature => {
-    const coords = feature.geometry.coordinates;
-    const [lng, lat] = coords;
-    L.marker([lat, lng]).addTo(task6Layer).bindPopup(
-        `<h4>${feature.properties.name}</h4>`
-    );
-});
-
 // HÄR STARTAR TASK 7
 let task7Layer = L.layerGroup();
 
 schoolData.features.forEach(feature => {
     const coords = feature.geometry.coordinates;
     const [lng, lat] = coords;
-
     const color = feature.properties.Color;
 
-    const markerIcon = L.divIcon({
-        className: 'custom-div-icon',
-        html: `<div style="background-color:${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`,
-        iconSize: [20, 20],
-        iconAnchor: [10, 10],
-    });
-
-    L.marker([lat, lng], { icon: markerIcon }).addTo(task7Layer);
+    L.marker([lat, lng], { icon: markers[color] }).addTo(task7Layer);
 });
 
 
@@ -316,6 +356,7 @@ document.getElementById("task3Button").addEventListener("click", () => {
     map.flyTo([60.0586, 17.6389], 9, {
         duration: 1
     });
+    setBuffer();
 });
 
 document.getElementById("task4Button").addEventListener("click", () => {
@@ -327,14 +368,15 @@ document.getElementById("task4Button").addEventListener("click", () => {
 
 document.getElementById("task5Button").addEventListener("click", () => {
     clearMap(task5Layer)
-    map.flyTo([62, 15], 6, {
+    map.flyTo([59.334591, 18.023240], 11, {
         duration: 1
     });
 });
 
 document.getElementById("task6Button").addEventListener("click", () => {
     clearMap(task6Layer)
-    map.flyTo([59.334591, 18.023240], 11, {
+
+    map.flyTo([62, 15], 6, {
         duration: 1
     });
 });
