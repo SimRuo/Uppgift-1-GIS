@@ -227,7 +227,7 @@ const cities = [
     { name: "Luleå", lat: 65.58, lon: 22.15 }
 ];
 
-const API_KEY = "2111e18bdc2ce91378d8c15b872d0bee";
+const API_KEY = "hej";
 const container = document.getElementById('informationSidebar');
 
 cities.forEach(city => {
