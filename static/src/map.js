@@ -75,13 +75,7 @@ const linje = L.polyline(linjeKordinater, { color: "blue" })
     .bindPopup("<h4>Borlänge Bussgata</h4><img src='/static/src/images/buss.webp' width='200px'><p>Här är Borlänges bussgata!</p>")
     .addTo(task1Layer);
 
-// Man skulle använda L.point och kommer inte på något bättre sätt att visa det på.
-var centerPoint = L.point(map.getSize().x / 2, map.getSize().y / 2);
-
-// gör om pixlarna till latlng
-var latlng = map.containerPointToLatLng(centerPoint);
-
-L.marker(latlng, { icon: markers['#0000FF'] }).addTo(task1Layer).bindPopup(
+L.marker([60.485959, 15.430585], { icon: markers['#0000FF'] }).addTo(task1Layer).bindPopup(
     "<h4>Svensk Fastighetsförmedling</h4><img src='/static/src/images/SF.jpg' width='200px'><p>Här är Svensk Fastighetsförmedling!</p>"
 );
 
@@ -233,7 +227,7 @@ const cities = [
     { name: "Luleå", lat: 65.58, lon: 22.15 }
 ];
 
-const API_KEY = "hemligt";
+const API_KEY = "2111e18bdc2ce91378d8c15b872d0bee";
 const container = document.getElementById('informationSidebar');
 
 cities.forEach(city => {
