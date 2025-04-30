@@ -140,9 +140,8 @@ let polylineMeasure = L.control.polylineMeasure({
     unit: 'kilometres',
     showBearings: false,
     clearMeasurementsOnStop: false,
-    showClearControl: false,
+    showClearControl: true,
     showUnitControl: false,
-    measureControlClasses: ["d-none"], // Vi använder css för att gömma knappen för att mäta avståndet.
 })
 polylineMeasure.addTo(map);
 
@@ -303,8 +302,6 @@ cities.forEach(city => {
         });
 });
 
-
-
 // HÄR STARTAR TASK 7
 let task7Layer = L.layerGroup();
 
@@ -313,7 +310,9 @@ schoolData.features.forEach(feature => {
     const [lng, lat] = coords;
     const color = feature.properties.Color;
 
-    L.marker([lat, lng], { icon: markers[color] }).addTo(task7Layer);
+    L.marker([lat, lng], { icon: markers[color] }).addTo(task7Layer).bindPopup(
+        `<h4>Cluster: ${feature.properties.Cluster}</h4><p>Color: ${feature.properties.Color}</p>`
+    );
 });
 
 
@@ -325,13 +324,18 @@ function clearMap(newLayer) {
     map.removeLayer(activeLayer);
     activeLayer = newLayer;
     activeLayer.addTo(map);
+    // rensar polyline meassure med den inbyggda metoden
+    if (polylineMeasure._clearAllMeasurements) {
+        polylineMeasure._clearAllMeasurements();
+    }
+
 }
 
 // Event för knapparna, vi rensar bara allt som ska rensas och renderar lagret som vi behöver.
 // Sparar activeLayer i en variabel så att vi kan ta bort det lagret som är aktivt just nu.
 document.getElementById("task1Button").addEventListener("click", () => {
     clearMap(task1Layer)
-    map.flyTo([60.486005, 15.430619], 17, {
+    map.flyTo([60.485005, 15.430619], 17, {
         duration: 1
     });
 });
